@@ -1,13 +1,29 @@
 import socket
+import threading
+import sys
 
-target = "127.0.0.1"  # replace with your target IP
+if len(sys.argv) != 2:
+    print("Usage: python skanneri.py <ip>")
+    sys.exit(1)
 
-for port in range(80, 444):
+target = sys.argv[1]
+open_ports = []
+
+def scan_port(port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.settimeout(1)
-    result = sock.connect_ex((target, port))
-    if result == 0:
-        print(f"Port {port} is open")
-    else:
-        print(f"Port {port} is closed")
-    sock.close()
+    try:
+        conn = sock.connect((target, port))
+        open_ports.append(port)
+    except:
+        pass
+
+for port in range(80, 444):
+    thread = threading.Thread(target=scan_port, args=(port,))
+    thread.start()
+
+for thread in threading.enumerate():
+    if thread is not threading.currentThread():
+        thread.join()
+
+print(f"Open ports on {target}: {open_ports}")
