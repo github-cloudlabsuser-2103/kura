@@ -12,6 +12,6 @@ def disk_usage():
     output = output.decode('utf-8').replace('\n', '<br>')
 
     return output
-#jee huu
+#jee huuasd
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
