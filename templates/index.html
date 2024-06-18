@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Port Scanner</h2>
+
+<form method="POST">
+  <label for="ip">IP Address:</label><br>
+  <input type="text" id="ip" name="ip" value="{{ target }}"><br>
+  <input type="submit" value="Scan">
+</form>
+
+{% if target %}
+<h2>Scan Results</h2>
+<p>Open ports on {{ target }}: {{ open_ports }}</p>
+{% endif %}
+
+</body>
+</html>
